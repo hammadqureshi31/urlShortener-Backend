@@ -40,7 +40,7 @@ export async function handleGetUserByEmailAndPass(req, res) {
     const isMatch = await bcrypt.compare(password, LoginUser.password);
     if (isMatch) {
       const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1h' }); // Set token expiration
-      res.cookie("token", token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+      res.cookie("token", token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'None' });
 
       return res.json({ token, currentUser: LoginUser });
     } else {
@@ -51,6 +51,7 @@ export async function handleGetUserByEmailAndPass(req, res) {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 }
+
 
 // Log out user by clearing the cookie
 export async function handleLogoutUser(req, res) {
