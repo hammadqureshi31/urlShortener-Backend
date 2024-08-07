@@ -38,10 +38,10 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 });
 
-mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost:27017/urlShortener")
+mongoose.connect(mongodb_url)
     .then(() => {
         console.log("MongoDB connected");
-        app.listen(process.env.PORT || 3000, () => {
+        app.listen(port, () => {
             console.log(`App is listening on port ${process.env.PORT || 3000}`);
         });
     })
