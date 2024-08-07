@@ -42,7 +42,7 @@ mongoose.connect(mongodb_url)
     .then(() => {
         console.log("MongoDB connected");
         app.listen(port, () => {
-            console.log(`App is listening on port ${process.env.PORT || 3000}`);
+            console.log(`App is listening on port ${port}`);
         });
     })
     .catch((error) => {
