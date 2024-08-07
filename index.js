@@ -5,7 +5,6 @@ import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import urlRoutes from "./routes/urlRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import { mongoDB_URL,port } from './consfig.js'
 
 const app = express();
 
@@ -13,7 +12,7 @@ const app = express();
 app.use(helmet());
 
 // CORS configuration
-const allowedOrigins = process.env.NODE_ENV === 'production' ? ['https://url-shorthener-mern.netlify.app'] : ['http://localhost:5173'];
+const allowedOrigins = process.env.NODE_ENV || "production" === 'production' ? ['https://urlshortener-fullstack.netlify.app/'] : ['http://localhost:5173'];
 app.use(cors({
     origin: allowedOrigins,
     credentials: true
@@ -36,11 +35,11 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 });
 
-mongoose.connect(mongoDB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost:27017/urlShortener", { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("MongoDB connected");
-        app.listen(port, () => {
-            console.log(`App is listening on port ${port}`);
+        app.listen(process.env.PORT || 3000, () => {
+            console.log(`App is listening on port ${process.env.PORT}`);
         });
     })
     .catch((error) => {
