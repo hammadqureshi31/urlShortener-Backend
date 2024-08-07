@@ -6,6 +6,7 @@ import helmet from "helmet";
 import dotenv from 'dotenv';
 import urlRoutes from "./routes/urlRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import {mongoDB_URL,port} from "./consfig.js";
 
 dotenv.config();
 
@@ -38,7 +39,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 });
 
-mongoose.connect(mongodb_url)
+mongoose.connect(mongoDB_URL)
     .then(() => {
         console.log("MongoDB connected");
         app.listen(port, () => {
